@@ -1,0 +1,61 @@
+cabal-version: 3.0
+name:          advent2022
+version:       0.1.0.0
+license:       MIT
+license-file:  LICENSE
+author:        comp
+build-type:    Simple
+tested-with:   GHC == 9.2
+
+common opts
+    ghc-options:
+        -Wall
+        -Wcompat
+        -Widentities
+        -Wincomplete-uni-patterns
+        -Wincomplete-record-updates
+        -Wredundant-constraints
+        -Wpartial-fields
+        -Wno-unused-do-bind
+    default-language: GHC2021
+    build-depends:
+          base ^>=4.16.0.0
+        , containers
+        , intervals
+        , filepath
+        , split
+        , template-haskell
+
+common exe-opts
+    import:         opts
+    build-depends:  advent2022
+    default-extensions:
+        LambdaCase
+        TemplateHaskell
+        ViewPatterns
+
+library
+    import:          opts
+    hs-source-dirs:  common
+    exposed-modules:
+        Advent
+
+executable day01
+    import:         exe-opts
+    hs-source-dirs: solutions
+    main-is:        Day01.hs
+
+executable day02
+    import:         exe-opts
+    hs-source-dirs: solutions
+    main-is:        Day02.hs
+
+executable day03
+    import:         exe-opts
+    hs-source-dirs: solutions
+    main-is:        Day03.hs
+
+executable day04
+    import:         exe-opts
+    hs-source-dirs: solutions
+    main-is:        Day04.hs

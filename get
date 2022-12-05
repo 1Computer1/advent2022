@@ -1,0 +1,33 @@
+#!/bin/bash
+
+D=$(printf %02d "$1")
+OUT="inputs/day$D.txt"
+
+if [ ! -f "$OUT" ]; then
+    SESSION=$(cat .session)
+    curl \
+        -A "https://github.com/1Computer1/advent2022/" \
+        --cookie "session=$SESSION" \
+        "https://adventofcode.com/2022/day/$1/input" > "$OUT"
+fi
+
+CABAL="advent2022.cabal"
+
+if ! grep -q "day$D" "$CABAL" ; then
+    cat >> "$CABAL" <<- EOM
+
+executable day$D
+    import:         exe-opts
+    hs-source-dirs: solutions
+    main-is:        Day$D.hs
+EOM
+fi
+
+SOLN="solutions/Day$D.hs"
+
+if [ ! -f "$SOLN" ]; then
+    cat "template" >> "$SOLN"
+fi
+
+code $SOLN
+xdg-open "https://adventofcode.com/2022/day/$1"
