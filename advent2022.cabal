@@ -69,3 +69,8 @@ executable day06
     import:         exe-opts
     hs-source-dirs: solutions
     main-is:        Day06.hs
+
+executable day07
+    import:         exe-opts
+    hs-source-dirs: solutions
+    main-is:        Day07.hs
