@@ -31,6 +31,7 @@ common exe-opts
     build-depends:  advent2022
     default-extensions:
         LambdaCase
+        MultiWayIf
         TemplateHaskell
         ViewPatterns
 
@@ -79,3 +80,8 @@ executable day08
     import:         exe-opts
     hs-source-dirs: solutions
     main-is:        Day08.hs
+
+executable day09
+    import:         exe-opts
+    hs-source-dirs: solutions
+    main-is:        Day09.hs
