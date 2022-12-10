@@ -85,3 +85,8 @@ executable day09
     import:         exe-opts
     hs-source-dirs: solutions
     main-is:        Day09.hs
+
+executable day10
+    import:         exe-opts
+    hs-source-dirs: solutions
+    main-is:        Day10.hs
