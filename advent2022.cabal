@@ -21,8 +21,10 @@ common opts
     build-depends:
           base ^>=4.16.0.0
         , containers
-        , intervals
         , filepath
+        , intervals
+        , mtl
+        , optics
         , split
         , template-haskell
 
@@ -32,6 +34,8 @@ common exe-opts
     default-extensions:
         LambdaCase
         MultiWayIf
+        OverloadedRecordDot
+        OverloadedLabels
         TemplateHaskell
         ViewPatterns
 
@@ -90,3 +94,8 @@ executable day10
     import:         exe-opts
     hs-source-dirs: solutions
     main-is:        Day10.hs
+
+executable day11
+    import:         exe-opts
+    hs-source-dirs: solutions
+    main-is:        Day11.hs
