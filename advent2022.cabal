@@ -22,6 +22,7 @@ common opts
           base ^>=4.16.0.0
         , containers
         , filepath
+        , fgl
         , intervals
         , mtl
         , optics
@@ -99,3 +100,8 @@ executable day11
     import:         exe-opts
     hs-source-dirs: solutions
     main-is:        Day11.hs
+
+executable day12
+    import:         exe-opts
+    hs-source-dirs: solutions
+    main-is:        Day12.hs
