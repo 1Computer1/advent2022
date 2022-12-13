@@ -18,20 +18,6 @@ common opts
         -Wpartial-fields
         -Wno-unused-do-bind
     default-language: GHC2021
-    build-depends:
-          base ^>=4.16.0.0
-        , containers
-        , filepath
-        , fgl
-        , intervals
-        , mtl
-        , optics
-        , split
-        , template-haskell
-
-common exe-opts
-    import:         opts
-    build-depends:  advent2022
     default-extensions:
         LambdaCase
         MultiWayIf
@@ -39,10 +25,26 @@ common exe-opts
         OverloadedLabels
         TemplateHaskell
         ViewPatterns
+    build-depends:
+          base ^>=4.16.0.0
+        , containers
+        , filepath
+        , fgl
+        , intervals
+        , mtl
+        , parsec
+        , optics
+        , search-algorithms
+        , split
+        , template-haskell
+
+common exe-opts
+    import:        opts
+    build-depends: advent2022
 
 library
-    import:          opts
-    hs-source-dirs:  common
+    import:         opts
+    hs-source-dirs: common
     exposed-modules:
         Advent
 
@@ -105,3 +107,8 @@ executable day12
     import:         exe-opts
     hs-source-dirs: solutions
     main-is:        Day12.hs
+
+executable day13
+    import:         exe-opts
+    hs-source-dirs: solutions
+    main-is:        Day13.hs
