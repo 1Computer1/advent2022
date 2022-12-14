@@ -31,6 +31,7 @@ common opts
         , filepath
         , fgl
         , intervals
+        , linear
         , mtl
         , parsec
         , optics
@@ -112,3 +113,8 @@ executable day13
     import:         exe-opts
     hs-source-dirs: solutions
     main-is:        Day13.hs
+
+executable day14
+    import:         exe-opts
+    hs-source-dirs: solutions
+    main-is:        Day14.hs
