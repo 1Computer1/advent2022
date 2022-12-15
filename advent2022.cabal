@@ -118,3 +118,13 @@ executable day14
     import:         exe-opts
     hs-source-dirs: solutions
     main-is:        Day14.hs
+
+executable day00
+    import:         exe-opts
+    hs-source-dirs: solutions
+    main-is:        Day00.hs
+
+executable day15
+    import:         exe-opts
+    hs-source-dirs: solutions
+    main-is:        Day15.hs
