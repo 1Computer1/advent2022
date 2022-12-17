@@ -37,6 +37,7 @@ common opts
         , optics
         , search-algorithms
         , split
+        , streams
         , template-haskell
 
 common exe-opts
@@ -133,3 +134,8 @@ executable day16
     import:         exe-opts
     hs-source-dirs: solutions
     main-is:        Day16.hs
+
+executable day17
+    import:         exe-opts
+    hs-source-dirs: solutions
+    main-is:        Day17.hs
