@@ -81,18 +81,17 @@ p1 inp = maxY solids
         ((_, _, _, solids) :> _) = I.filter (\(n, _, _, _) -> n == 2022) states
 
 p2 :: String -> Int
-p2 inp = height * cycles + tx
+p2 inp = (maxY solids3 - maxY solids2) * cycles + maxY solidsX
     where
         moves = parse inp
         states = simulate blocks moves initSolids
 
         (_, bi, mi, _) = findRepeat (\(_, x, y, _) -> (x, y)) states
         statesR = I.filter (\(_, x, y, _) -> x == bi && y == mi) states
-        ((n1, _, _, solids) :> (n2, _, _, maxY -> t2) :> (n3, _, _, maxY -> t3) :> _) = statesR
+        (_ :> (n2, _, _, solids2) :> (n3, _, _, solids3) :> _) = statesR
 
-        height = t3 - t2
         period = n3 - n2
-        (cycles, extra) = (1000000000000 - n1) `divMod` period
+        (cycles, extra) = (1000000000000 - n2) `divMod` period
 
-        statesX = simulate (I.drop bi blocks) (I.drop mi moves) solids
-        ((_, _, _, maxY -> tx) :> _) = I.filter (\(n, _, _, _) -> n == extra) statesX
+        statesX = simulate (I.drop bi blocks) (I.drop mi moves) solids2
+        ((_, _, _, solidsX) :> _) = I.filter (\(n, _, _, _) -> n == extra) statesX
