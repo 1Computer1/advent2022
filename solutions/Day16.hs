@@ -1,13 +1,13 @@
 module Main (main) where
 
 import Advent (input)
+import Control.Arrow (first)
 import Data.Char (isUpper)
 import Data.Function ((&))
 import Data.Graph.Inductive hiding ((&))
-import Data.List (foldl', maximumBy)
+import Data.List (foldl', tails)
 import Data.List.Split (splitOn)
 import Data.Map.Strict qualified as M
-import Data.Ord (comparing)
 import Data.Set qualified as S
 import Data.Tree qualified as T
 
@@ -45,31 +45,42 @@ parse inp = (start, valves, dists)
 stateTree :: Int -> M.Map Node (M.Map Node Int) -> Node -> M.Map Node Int -> T.Tree (Node, Int)
 stateTree maxT dists start valves = T.unfoldTree buildNode (1, start, M.empty)
     where
-        nextStates (t, v, zs) =  if
-            | t >= maxT ->
-                []
-            | v /= start && v `M.notMember` zs ->
-                [(t + 1, v, M.insert v ((maxT - t) * valves M.! v) zs)]
-            | otherwise ->
-                [(t + dists M.! v M.! w, w, zs) | w <- M.keys valves, w `M.notMember` zs]
+        dist v w = dists M.! v M.! w
+
+        nextStates (t, v, zs) =
+            [ (t', w, M.insert w ((maxT - t' + 1) * valves M.! w) zs)
+            | w <- M.keys (valves `M.difference` zs)
+            , let t' = t + dist v w + 1
+            , t' <= maxT
+            ]
+
         buildNode (t, v, zs) =
             let succs = nextStates (t, v, zs)
-            in ((v, if null succs then foldl' (+) 0 zs else 0), succs)
+            in ((v, foldl' (+) 0 zs), succs)
 
-leaves :: T.Tree (a, b) -> [([a], b)]
-leaves (T.Node (n, v) []) = [([n], v)]
-leaves (T.Node (n, _) xs) = map (\(ns, v) -> (n:ns, v)) $ concatMap leaves xs
+withPath :: T.Tree (Node, Int) -> T.Tree ([Node], Int)
+withPath = go []
+    where
+        go p (T.Node (n, v) xs) = T.Node (n:p, v) (map (go (n:p)) xs)
+
+bestBySubset :: T.Tree (Node, Int) -> M.Map (S.Set Node) Int
+bestBySubset = M.fromListWith max . map (first S.fromList) . T.flatten . withPath
 
 p1 :: String -> Int
-p1 inp = maximum . map snd . leaves $ tr
+p1 inp = maximum bests
     where
         (s, vs, dists) = parse inp
         tr = stateTree 30 dists s vs
+        bests = bestBySubset tr
+
+-- my old solution was very greedy...
+-- it would take the optimal path for just the human and then give the unvisited rooms to the elephant to handle
+-- it failed for the test input but gives the correct answer for the real input!
+-- was fun while it lasted (ran pretty fast too)
 
 p2 :: String -> Int
-p2 inp = f1 + f2
+p2 inp = maximum [f1 + f2 | (p, f1) : rest <- tails (M.assocs bests), (q, f2) <- rest, p `S.intersection` q == S.singleton s]
     where
-        (s, vs1, dists) = parse inp
-        (p, f1) = maximumBy (comparing snd) . leaves $ stateTree 26 dists s vs1
-        vs2 = vs1 `M.withoutKeys` S.fromList p
-        (_, f2) = maximumBy (comparing snd) . leaves $ stateTree 26 dists s vs2
+        (s, vs, dists) = parse inp
+        tr = stateTree 26 dists s vs
+        bests = bestBySubset tr
