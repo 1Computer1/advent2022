@@ -4,6 +4,7 @@ module Advent
     ( input
     ) where
 
+import Advent.Linear.Fields ()
 import Data.Char (toLower)
 import System.FilePath ((</>), replaceExtension, takeFileName)
 import Language.Haskell.TH (Q, Exp(..), Lit(..), Loc(..))

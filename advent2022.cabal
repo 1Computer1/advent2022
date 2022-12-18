@@ -49,6 +49,7 @@ library
     hs-source-dirs: common
     exposed-modules:
         Advent
+        Advent.Linear.Fields
 
 executable day01
     import:         exe-opts
@@ -139,3 +140,8 @@ executable day17
     import:         exe-opts
     hs-source-dirs: solutions
     main-is:        Day17.hs
+
+executable day18
+    import:         exe-opts
+    hs-source-dirs: solutions
+    main-is:        Day18.hs
