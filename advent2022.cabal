@@ -20,6 +20,7 @@ common opts
     default-language: GHC2021
     default-extensions:
         LambdaCase
+        LexicalNegation
         MultiWayIf
         OverloadedRecordDot
         OverloadedLabels
@@ -145,3 +146,8 @@ executable day18
     import:         exe-opts
     hs-source-dirs: solutions
     main-is:        Day18.hs
+
+executable day19
+    import:         exe-opts
+    hs-source-dirs: solutions
+    main-is:        Day19.hs
