@@ -29,6 +29,7 @@ common opts
     build-depends:
           base ^>=4.16.0.0
         , containers
+        , data-clist
         , filepath
         , fgl
         , intervals
@@ -151,3 +152,8 @@ executable day19
     import:         exe-opts
     hs-source-dirs: solutions
     main-is:        Day19.hs
+
+executable day20
+    import:         exe-opts
+    hs-source-dirs: solutions
+    main-is:        Day20.hs
