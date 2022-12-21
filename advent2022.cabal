@@ -157,3 +157,8 @@ executable day20
     import:         exe-opts
     hs-source-dirs: solutions
     main-is:        Day20.hs
+
+executable day21
+    import:         exe-opts
+    hs-source-dirs: solutions
+    main-is:        Day21.hs
